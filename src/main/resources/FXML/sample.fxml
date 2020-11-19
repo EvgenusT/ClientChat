@@ -1,45 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="513.0" vgap="10"
-          xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="513.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <columnConstraints>
-        <ColumnConstraints/>
+        <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints/>
+        <RowConstraints />
     </rowConstraints>
     <children>
         <AnchorPane prefHeight="600.0" prefWidth="500.0">
             <children>
-                <Label layoutX="26.0" layoutY="22.0" text="Твой ник"/>
-                <Label layoutX="26.0" layoutY="188.0" text="Чат"/>
-                <Button fx:id="myButtonCreate" layoutX="80.0" layoutY="18.0" mnemonicParsing="false"
-                        onAction="#pressMyButtonCreateNik" prefHeight="25.0" prefWidth="83.0" text="Создать"/>
-                <Button fx:id="myButtonSend" layoutX="26.0" layoutY="150.0" mnemonicParsing="false"
-                        onAction="#pressMyButtonSend" text="Отправить сообщение"/>
-                <TextArea fx:id="myWindowText" layoutX="32.0" layoutY="220.0" prefHeight="341.0" prefWidth="436.0"
-                          wrapText="true"/>
-                <TextField fx:id="myNik" layoutX="14.0" layoutY="55.0"/>
-                <TextField fx:id="mytextChat" layoutX="14.0" layoutY="101.0" onAction="#pressMyButtonSend"
-                           prefHeight="25.0" prefWidth="454.0"/>
-                <Button fx:id="myButtonCleare" layoutX="379.0" layoutY="150.0" mnemonicParsing="false"
-                        onAction="#pressMyButtonCleare" text="Очистить чат"/>
-                <CheckBox fx:id="myConnect" layoutX="356.0" layoutY="22.0" mnemonicParsing="true"
-                          onAction="#pressMyButtonOnChat" text="Подключить чат"/>
+                <Label layoutX="26.0" layoutY="22.0" text="Твой ник" />
+                <Label layoutX="26.0" layoutY="188.0" text="Чат" />
+                <Button fx:id="myButtonCreate" layoutX="80.0" layoutY="18.0" mnemonicParsing="false" onAction="#pressMyButtonCreateNik" prefHeight="25.0" prefWidth="83.0" text="Создать" />
+                <Button fx:id="myButtonSend" layoutX="26.0" layoutY="150.0" mnemonicParsing="false" onAction="#pressMyButtonSend" text="Отправить сообщение" />
+                <TextArea fx:id="myWindowText" layoutX="32.0" layoutY="220.0" prefHeight="341.0" prefWidth="436.0" wrapText="true" />
+                <TextField fx:id="myNik" layoutX="14.0" layoutY="55.0" />
+                <TextField fx:id="mytextChat" layoutX="14.0" layoutY="101.0" onAction="#pressMyButtonSend" prefHeight="25.0" prefWidth="454.0" />
+                <Button fx:id="myButtonCleare" layoutX="379.0" layoutY="150.0" mnemonicParsing="false" onAction="#pressMyButtonCleare" text="Очистить чат" />
+                <CheckBox fx:id="myConnect" layoutX="356.0" layoutY="22.0" mnemonicParsing="true" onAction="#pressMyButtonOnChat" text="Подключить чат" />
+            <RadioButton fx:id="Off_chat" layoutX="356.0" layoutY="59.0" mnemonicParsing="false" onAction="#pressMyButtonOffChat" text="отключение от чата" />
             </children>
             <effect>
-                <Glow level="0.18"/>
+                <Glow level="0.18" />
             </effect>
         </AnchorPane>
     </children>

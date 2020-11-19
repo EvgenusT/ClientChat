@@ -52,7 +52,6 @@ public class Controller implements Initializable {
     //получаем имя компьютера
     public static final String compName = System.getenv("COMPUTERNAME");
 
-
     public Controller() {
     }
 
