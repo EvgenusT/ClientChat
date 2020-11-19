@@ -22,8 +22,7 @@
                 <TextField fx:id="myNik" layoutX="14.0" layoutY="55.0" />
                 <TextField fx:id="mytextChat" layoutX="14.0" layoutY="101.0" onAction="#pressMyButtonSend" prefHeight="25.0" prefWidth="454.0" />
                 <Button fx:id="myButtonCleare" layoutX="379.0" layoutY="150.0" mnemonicParsing="false" onAction="#pressMyButtonCleare" text="Очистить чат" />
-                <CheckBox fx:id="myConnect" layoutX="356.0" layoutY="22.0" mnemonicParsing="true" onAction="#pressMyButtonOnChat" text="Подключить чат" />
-            <RadioButton fx:id="Off_chat" layoutX="356.0" layoutY="59.0" mnemonicParsing="false" onAction="#pressMyButtonOffChat" text="отключение от чата" />
+<!--            <Button fx:id="Button_ON" layoutX="341.0" layoutY="18.0" mnemonicParsing="false" onAction="#pressMyButtonOnChat" text="Подключиться " />-->
             </children>
             <effect>
                 <Glow level="0.18" />

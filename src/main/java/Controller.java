@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.URL;
 import java.text.DateFormat;
@@ -43,13 +44,12 @@ public class Controller implements Initializable {
     private String addr;
     private int port;
     public static final int PORT = 18080;
-    // String outSound = "\\sound\\out.wav";
     String outSound = "src\\main\\resources\\sound\\out.wav";
     String inSound = "src\\main\\resources\\sound\\send.wav";
-    String nikname;
+    String nikname = "";
     List<Map<String, String>> myList = new LinkedList();
 
-    //РїРѕР»СѓС‡Р°РµРј РёРјСЏ РєРѕРјРїСЊСЋС‚РµСЂР°
+    //получаем имя компьютера
     public static final String compName = System.getenv("COMPUTERNAME");
 
     public Controller() {
@@ -58,55 +58,63 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException {
+    public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException, InvocationTargetException {
+        OnChat();
         this.nikname = this.myNik.getText();
-        this.out.write("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t РїРѕРґРєР»СЋС‡РµРЅ Рє  С‡Р°С‚Сѓ\n");
-        this.out.flush();
-    }
+        if (!this.nikname.isEmpty()) {
+            this.out.write("(" + this.dateTimeCreate() + ") - " + nikname + ":\t подключен к чату\n");
+            this.out.flush();
 
-    public void pressMyButtonSend(ActionEvent actionEvent) throws IOException, UnsupportedAudioFileException {
-        String textMessage = this.mytextChat.getText();
-        StringJoiner myTextOut = new StringJoiner("\n");
-        this.nikname = this.myNik.getText();
-        if (this.nikname.isEmpty()) {
-            this.nikname = "Anonymous";
         }
-
-        myTextOut.add("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage);
-        this.out.write(myTextOut + "\n");
-        this.out.flush();
-        this.mytextChat.clear();
     }
 
-    public void pressMyButtonCleare(ActionEvent actionEvent) {
+    public void pressMyButtonSend(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
+
+        String textMessage = this.mytextChat.getText();
+        if (!textMessage.isEmpty()) {
+            StringJoiner myTextOut = new StringJoiner("\n");
+            this.nikname = this.myNik.getText();
+
+            myTextOut.add("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage);
+            if (!this.nikname.isEmpty()) {
+                this.out.write(myTextOut + "\n");
+                this.out.flush();
+                this.mytextChat.clear();
+            }else {
+                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "ник не создан");
+            }
+        }
+    }
+
+    public void pressMyButtonCleare(ActionEvent actionEvent) throws IOException {
         this.myList.clear();
         this.myWindowText.clear();
     }
 
-    public void pressMyButtonOnChat(ActionEvent actionEvent) throws IOException {
-        this.addr = compName;
-        this.port = PORT;
-
+    public void OnChat() throws IOException, InvocationTargetException {
         try {
-            this.socet = new Socket(compName, PORT);
-        } catch (IOException var4) {
-            System.err.println("(" + this.dateTimeCreate() + ") - РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРѕРєРµС‚Сѓ");
-        }
+//            if (!this.nikname.isEmpty()) {
+                this.socet = new Socket(compName, PORT);
+//            } else {
+//                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
+//            }
 
+        } catch (IOException var4) {
+            System.err.println("(" + this.dateTimeCreate() + ") - Ошибка подключения к сокету");
+        }
         try {
             this.in = new BufferedReader(new InputStreamReader(this.socet.getInputStream()));
             this.out = new BufferedWriter(new OutputStreamWriter(this.socet.getOutputStream()));
             (new Controller.ReadMsg()).start();
-            this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t С‚С‹ РїРѕРґРєР»СЋС‡РµРЅ Рє С‡Р°С‚Сѓ");
+            if (!this.nikname.isEmpty()) {
+            this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
+            } else {
+                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
+                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "Ник не создан");
+            }
         } catch (IOException var3) {
             this.downService();
         }
-
-    }
-
-    public void pressMyButtonOffChat(ActionEvent actionEvent) {
-        this.downService();
-        this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t С‚С‹ РѕС‚РєР»СЋС‡РµРЅ РѕС‚ С‡Р°С‚Р°");
     }
 
     private void downService() {
@@ -118,7 +126,6 @@ public class Controller implements Initializable {
             }
         } catch (IOException var2) {
         }
-
     }
 
     private String dateTimeCreate() {
@@ -137,7 +144,6 @@ public class Controller implements Initializable {
         } catch (Exception var4) {
             var4.printStackTrace();
         }
-
     }
 
     private class ReadMsg extends Thread {
