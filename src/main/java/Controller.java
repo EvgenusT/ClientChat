@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -75,17 +76,10 @@ public class Controller implements Initializable {
     public static final String compName = System.getenv("COMPUTERNAME");
     public static final String compName2 = "zf5bank.ddns.net";
 
+    String address = "zf5bank.ddns.net"; // это IP-адрес компьютера, где исполняется наша серверная программа.
+
     public Controller() {
     }
-
-//   public void  getControllerLogin() throws IOException {
-//
-//       FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
-//       Parent root = loader.load();
-//       ControllerLogin conLog = loader.<>getController();
-//       conLog.setLoginClient();
-//       conLog.setPasswordClient();
-//   }
 
     public void findAction(ActionEvent actionEvent) {
         try {
@@ -102,7 +96,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -130,7 +123,7 @@ public class Controller implements Initializable {
                 this.out.write(myTextOut + "\n");
                 this.out.flush();
                 this.mytextChat.clear();
-            }else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Невозможно отправить сообщение, ник не задан");
                 alert.showAndWait();
             }
@@ -144,9 +137,9 @@ public class Controller implements Initializable {
 
     public void OnChat() throws IOException, InvocationTargetException {
         try {
-//
-                this.socket = new Socket(compName2, PORT);
-//
+            InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
+//            this.socket = new Socket(ipAddress, PORT);
+            this.socket = new Socket("127.0.0.1", PORT);
 
         } catch (IOException var4) {
             System.err.println("(" + this.dateTimeCreate() + ") - Ошибка подключения к сокету");
@@ -156,7 +149,7 @@ public class Controller implements Initializable {
             this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
             (new ReadMsg()).start();
             if (!this.nikname.isEmpty()) {
-            this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
+                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
             } else {
 //                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
 //                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "Ник не создан");
