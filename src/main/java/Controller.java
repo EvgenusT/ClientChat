@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,9 +22,14 @@ import java.util.regex.Pattern;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -33,27 +39,71 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Controller implements Initializable {
     @FXML
     public TextField myNik;
+
     @FXML
     public TextField mytextChat;
     @FXML
     public TextArea myWindowText;
-    private Socket socet;
+    private Socket socket;
     private BufferedReader in;
     private BufferedWriter out;
     private BufferedReader inputUser;
     private String addr;
     private int port;
     public static final int PORT = 18080;
+
+    //ссылки на контроллеры
+    private ControllerLogin children;
+
+    @FXML
+    public TextArea login;
+    @FXML
+    public TextArea password;
+
+    String loginClient;
+    String passwordClient;
+
+
     String outSound = "src\\main\\resources\\sound\\out.wav";
     String inSound = "src\\main\\resources\\sound\\send.wav";
     String nikname = "";
+
     List<Map<String, String>> myList = new LinkedList();
+
 
     //получаем имя компьютера
     public static final String compName = System.getenv("COMPUTERNAME");
+    public static final String compName2 = "zf5bank.ddns.net";
 
     public Controller() {
     }
+
+//   public void  getControllerLogin() throws IOException {
+//
+//       FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+//       Parent root = loader.load();
+//       ControllerLogin conLog = loader.<>getController();
+//       conLog.setLoginClient();
+//       conLog.setPasswordClient();
+//   }
+
+    public void findAction(ActionEvent actionEvent) {
+        try {
+            Stage stageFind = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("FXML/login.fxml"));
+            Parent root = loader.load();
+            stageFind.setScene(new Scene(root));
+            stageFind.show();
+
+            children = loader.getController(); //получаем контроллер окна login.fxml
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -81,7 +131,8 @@ public class Controller implements Initializable {
                 this.out.flush();
                 this.mytextChat.clear();
             }else {
-                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "ник не создан");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Невозможно отправить сообщение, ник не задан");
+                alert.showAndWait();
             }
         }
     }
@@ -93,24 +144,24 @@ public class Controller implements Initializable {
 
     public void OnChat() throws IOException, InvocationTargetException {
         try {
-//            if (!this.nikname.isEmpty()) {
-                this.socet = new Socket(compName, PORT);
-//            } else {
-//                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
-//            }
+//
+                this.socket = new Socket(compName2, PORT);
+//
 
         } catch (IOException var4) {
             System.err.println("(" + this.dateTimeCreate() + ") - Ошибка подключения к сокету");
         }
         try {
-            this.in = new BufferedReader(new InputStreamReader(this.socet.getInputStream()));
-            this.out = new BufferedWriter(new OutputStreamWriter(this.socet.getOutputStream()));
-            (new Controller.ReadMsg()).start();
+            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            (new ReadMsg()).start();
             if (!this.nikname.isEmpty()) {
             this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
             } else {
-                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
-                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "Ник не создан");
+//                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
+//                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "Ник не создан");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
+                alert.showAndWait();
             }
         } catch (IOException var3) {
             this.downService();
@@ -119,8 +170,8 @@ public class Controller implements Initializable {
 
     private void downService() {
         try {
-            if (!this.socet.isClosed()) {
-                this.socet.close();
+            if (!this.socket.isClosed()) {
+                this.socket.close();
                 this.in.close();
                 this.out.close();
             }
