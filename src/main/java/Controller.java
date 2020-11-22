@@ -35,8 +35,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Controller {
 
-    String localAddress = "Local connect"; // это IP-адрес компьютера, где исполняется наша серверная программа.
-    String address = "Network connected"; // это IP-адрес компьютера, где исполняется наша серверная программа.
+    String localAddress = "Local connect"; // СЌС‚Рѕ IP-Р°РґСЂРµСЃ РєРѕРјРїСЊСЋС‚РµСЂР°, РіРґРµ РёСЃРїРѕР»РЅСЏРµС‚СЃСЏ РЅР°С€Р° СЃРµСЂРІРµСЂРЅР°СЏ РїСЂРѕРіСЂР°РјРјР°.
+    String address = "Network connected"; // СЌС‚Рѕ IP-Р°РґСЂРµСЃ РєРѕРјРїСЊСЋС‚РµСЂР°, РіРґРµ РёСЃРїРѕР»РЅСЏРµС‚СЃСЏ РЅР°С€Р° СЃРµСЂРІРµСЂРЅР°СЏ РїСЂРѕРіСЂР°РјРјР°.
 
     ObservableList<String> localizationList = FXCollections.observableArrayList(localAddress, address);
     String loc = "127.0.0.1";
@@ -73,7 +73,7 @@ public class Controller {
         this.nikname = this.myNik.getText();
         OnChat();
         if (!this.nikname.isEmpty()) {
-            this.out.write("(" + this.dateTimeCreate() + ") - " + nikname + ":\t подключен к чату\n");
+            this.out.write("(" + this.dateTimeCreate() + ") - " + nikname + ":\t РїРѕРґРєР»СЋС‡РµРЅ Рє С‡Р°С‚Сѓ\n");
             this.out.flush();
         }
     }
@@ -95,7 +95,7 @@ public class Controller {
                 this.mytextChat.clear();
 
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Невозможно отправить сообщение, ник не задан");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "РќРµРІРѕР·РјРѕР¶РЅРѕ РѕС‚РїСЂР°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ, РЅРёРє РЅРµ Р·Р°РґР°РЅ");
                 alert.showAndWait();
             }
         }
@@ -116,16 +116,16 @@ public class Controller {
             }
 
         } catch (IOException var4) {
-            System.err.println("(" + this.dateTimeCreate() + ") - Ошибка подключения к сокету");
+            System.err.println("(" + this.dateTimeCreate() + ") - РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРѕРєРµС‚Сѓ");
         }
         try {
             this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
             (new ReadMsg()).start();
             if (!this.nikname.isEmpty()) {
-                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
+                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ: " + this.nikname + " -\t  РїРѕРґРєР»СЋС‡РµРЅ Рє С‡Р°С‚Сѓ");
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "РќРёРє РЅРµ СЃРѕР·РґР°РЅ");
                 alert.showAndWait();
             }
         } catch (IOException var3) {

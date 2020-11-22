@@ -2,8 +2,8 @@ public class MainApp {
 
     public static void main(String[] args) {
         /**
-         особенности Maven. Нужен класс с  main для запуска Main, который наследует Application.
-         Без этого запуск с jar не возможен.
+         РѕСЃРѕР±РµРЅРЅРѕСЃС‚Рё Maven. РќСѓР¶РµРЅ РєР»Р°СЃСЃ СЃ  main РґР»СЏ Р·Р°РїСѓСЃРєР° Main, РєРѕС‚РѕСЂС‹Р№ РЅР°СЃР»РµРґСѓРµС‚ Application.
+         Р‘РµР· СЌС‚РѕРіРѕ Р·Р°РїСѓСЃРє СЃ jar РЅРµ РІРѕР·РјРѕР¶РµРЅ.
          */
         Main.main(args);
     }
