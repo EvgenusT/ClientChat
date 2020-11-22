@@ -1,9 +1,4 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -21,15 +16,16 @@ import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.AudioInputStream;
@@ -37,33 +33,33 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class Controller implements Initializable {
+public class Controller {
+
+    String localAddress = "Local connect"; // это IP-адрес компьютера, где исполняется наша серверная программа.
+    String address = "Network connected"; // это IP-адрес компьютера, где исполняется наша серверная программа.
+
+    ObservableList<String> localizationList = FXCollections.observableArrayList(localAddress, address);
+    String loc = "127.0.0.1";
+    String add = "zf5bank.ddns.net";
     @FXML
     public TextField myNik;
-
     @FXML
     public TextField mytextChat;
+
     @FXML
     public TextArea myWindowText;
+    @FXML
+    public ChoiceBox switchLocalization;
+
+    @FXML
+    public void initialize() {
+        switchLocalization.setValue("Local connect");
+        switchLocalization.setItems(localizationList);
+    }
     private Socket socket;
     private BufferedReader in;
     private BufferedWriter out;
-    private BufferedReader inputUser;
-    private String addr;
-    private int port;
     public static final int PORT = 18080;
-
-    //ссылки на контроллеры
-    private ControllerLogin children;
-
-    @FXML
-    public TextArea login;
-    @FXML
-    public TextArea password;
-
-    String loginClient;
-    String passwordClient;
-
 
     String outSound = "src\\main\\resources\\sound\\out.wav";
     String inSound = "src\\main\\resources\\sound\\send.wav";
@@ -71,58 +67,33 @@ public class Controller implements Initializable {
 
     List<Map<String, String>> myList = new LinkedList();
 
-
-    //получаем имя компьютера
-    public static final String compName = System.getenv("COMPUTERNAME");
-    public static final String compName2 = "zf5bank.ddns.net";
-
-    String address = "zf5bank.ddns.net"; // это IP-адрес компьютера, где исполняется наша серверная программа.
-
-    public Controller() {
+    public Controller() throws UnsupportedEncodingException {
     }
-
-    public void findAction(ActionEvent actionEvent) {
-        try {
-            Stage stageFind = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("FXML/login.fxml"));
-            Parent root = loader.load();
-            stageFind.setScene(new Scene(root));
-            stageFind.show();
-
-            children = loader.getController(); //получаем контроллер окна login.fxml
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
     public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException, InvocationTargetException {
-        OnChat();
         this.nikname = this.myNik.getText();
+        OnChat();
         if (!this.nikname.isEmpty()) {
             this.out.write("(" + this.dateTimeCreate() + ") - " + nikname + ":\t подключен к чату\n");
             this.out.flush();
-
         }
     }
-
     public void pressMyButtonSend(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
 
         String textMessage = this.mytextChat.getText();
-        if (!textMessage.isEmpty()) {
+//        String aaa = new String(textMessage.getBytes("UTF-8"), "windows-1251");
+        String aaa = this.mytextChat.getText();
+
+
+        if (!aaa.isEmpty()) {
             StringJoiner myTextOut = new StringJoiner("\n");
             this.nikname = this.myNik.getText();
 
-            myTextOut.add("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage);
+            myTextOut.add("(" + this.dateTimeCreate() + ") - " + this.nikname + ":\t" + aaa);
             if (!this.nikname.isEmpty()) {
                 this.out.write(myTextOut + "\n");
                 this.out.flush();
                 this.mytextChat.clear();
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Невозможно отправить сообщение, ник не задан");
                 alert.showAndWait();
@@ -137,9 +108,12 @@ public class Controller implements Initializable {
 
     public void OnChat() throws IOException, InvocationTargetException {
         try {
-            InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
-//            this.socket = new Socket(ipAddress, PORT);
-            this.socket = new Socket("127.0.0.1", PORT);
+            String adresRes = switchLocalization.getValue().toString();
+            if (!adresRes.isEmpty() && adresRes.equals(localAddress)) {
+                this.socket = new Socket(loc, PORT);
+            } else if (!adresRes.isEmpty() && adresRes.equals(address)) {
+                this.socket = new Socket(add, PORT);
+            }
 
         } catch (IOException var4) {
             System.err.println("(" + this.dateTimeCreate() + ") - Ошибка подключения к сокету");
@@ -151,8 +125,6 @@ public class Controller implements Initializable {
             if (!this.nikname.isEmpty()) {
                 this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
             } else {
-//                System.err.println("(" + this.dateTimeCreate() + ") - Ник не создан");
-//                this.myWindowText.setText("(" + this.dateTimeCreate() + ") - " + "Ник не создан");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
                 alert.showAndWait();
             }
@@ -193,7 +165,6 @@ public class Controller implements Initializable {
     private class ReadMsg extends Thread {
         private ReadMsg() {
         }
-
         public void run() {
             try {
                 while (true) {
