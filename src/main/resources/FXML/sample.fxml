@@ -30,6 +30,7 @@
                 <Button fx:id="myButtonCleare" layoutX="377.0" layoutY="153.0" mnemonicParsing="false" onAction="#pressMyButtonCleare" text="Очистить чат" />
                 <Label alignment="CENTER" layoutX="319.0" layoutY="35.0" prefHeight="17.0" prefWidth="149.0" text="Способ подключения" textAlignment="CENTER" />
             <ChoiceBox fx:id="switchLocalization" layoutX="284.0" layoutY="69.0" prefHeight="25.0" prefWidth="185.0" />
+            <Button fx:id="offChat" layoutX="325.0" layoutY="186.0" mnemonicParsing="false" onAction="#pressMyButtonOffChat" prefHeight="25.0" prefWidth="141.0" text="Отключиться от чата" />
             </children>
             <effect>
                 <Glow level="0.18" />
