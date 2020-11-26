@@ -1,15 +1,24 @@
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.UnsupportedEncodingException;
+
 
 public class Main extends Application {
 
     public static Stage primaryStage;
+
+    Controller controller = new Controller();
+
+    public Main() throws UnsupportedEncodingException {
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -17,9 +26,30 @@ public class Main extends Application {
         primaryStage.setTitle("BalTalOchKa v 1.0");
         primaryStage.setScene(new Scene(root));
         runStage(primaryStage);
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                controller.stop();
+                System.exit(0);
+            }
+        });
     }
-    public static void runStage(Stage stage) throws IOException {
-        primaryStage  = stage;
+
+    //    public static void close(){
+//
+//        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            public void handle(WindowEvent we) {
+//                System.out.println("закрыл кнопкой X");
+//                controller.downService();
+//                Platform.exit();
+//                System.exit(0);
+//            }
+//        });
+//
+//    }
+//
+    public void runStage(Stage stage) throws IOException {
+        primaryStage = stage;
         primaryStage.show();
     }
 

@@ -1,11 +1,8 @@
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.net.URLEncoder;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,11 +39,10 @@ public class Controller {
     }
 
     String textMessage = "";
-
-
     private Socket socket;
     private BufferedReader in;
     private BufferedWriter out;
+
     public static final int PORT = 18080;
 
     String outSound = "src\\main\\resources\\sound\\out.wav";
@@ -55,7 +51,15 @@ public class Controller {
 
     List<Map<String, String>> myList = new LinkedList();
 
+    static Controller controller = null;
+
     public Controller() throws UnsupportedEncodingException {
+        controller = this;
+//        Locale.setDefault(new Locale("ru"));
+    }
+
+    public static void stop() {
+        controller.downService();
     }
 
     public void OnChat() throws IOException, InvocationTargetException {
@@ -66,7 +70,6 @@ public class Controller {
             } else if (!adresRes.isEmpty() && adresRes.equals(address)) {
                 this.socket = new Socket(add, PORT);
             }
-
         } catch (IOException var4) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Ошибка подключения к сокету");
             alert.showAndWait();
@@ -74,15 +77,7 @@ public class Controller {
         try {
             this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-
             (new ReadMsg()).start();
-
-            if (!this.nikname.isEmpty()) {
-                this.myWindowText.setText("(" + Utils.dateTimeCreate() + ") - " + " пользователь: " + this.nikname + " -\t  подключен к чату");
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
-                alert.showAndWait();
-            }
         } catch (IOException var3) {
 
         }
@@ -94,13 +89,15 @@ public class Controller {
         if (!this.nikname.isEmpty()) {
             this.out.write("(" + Utils.dateTimeCreate() + ") - " + nikname + ":\t подключен к чату\n");
             this.out.flush();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
+            alert.showAndWait();
         }
     }
 
     public void pressMyButtonSend(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
 
         textMessage = mytextChat.getText();
-
         if (!textMessage.isEmpty()) {
             StringJoiner myTextOut = new StringJoiner("\n");
             this.nikname = this.myNik.getText();
@@ -124,8 +121,6 @@ public class Controller {
     }
 
     public void pressMyButtonOffChat(ActionEvent actionEvent) throws IOException {
-        this.out.write("StoP+-+");
-        this.out.flush();
         this.downService();
         this.myWindowText.setText("(" + Utils.dateTimeCreate() + ") - " + this.nikname + ":\t ты отключен от чата");
     }
@@ -133,6 +128,8 @@ public class Controller {
     private void downService() {
         try {
             if (!this.socket.isClosed()) {
+                this.out.write("StoP+-+");
+                this.out.flush();
                 this.out.close();
                 this.in.close();
                 this.socket.close();
@@ -173,8 +170,6 @@ public class Controller {
                     } else {
                         Utils.playSound(Controller.this.outSound);
                     }
-
-                    //отправка сформированного сообщения в поле вывода чата
                     Controller.this.myWindowText.setText(textOut.toString());
                 }
             } catch (IOException var8) {
@@ -183,4 +178,6 @@ public class Controller {
         }
     }
 }
+
+
 
