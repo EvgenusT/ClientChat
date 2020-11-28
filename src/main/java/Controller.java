@@ -1,7 +1,7 @@
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
-import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -55,7 +56,6 @@ public class Controller {
 
     public Controller() throws UnsupportedEncodingException {
         controller = this;
-//        Locale.setDefault(new Locale("ru"));
     }
 
     public static void stop() {
@@ -63,6 +63,7 @@ public class Controller {
     }
 
     public void OnChat() throws IOException, InvocationTargetException {
+
         try {
             String adresRes = switchLocalization.getValue().toString();
             if (!adresRes.isEmpty() && adresRes.equals(localAddress)) {
@@ -75,8 +76,8 @@ public class Controller {
             alert.showAndWait();
         }
         try {
-            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
+            this.out = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"));
             (new ReadMsg()).start();
         } catch (IOException var3) {
 
@@ -87,7 +88,8 @@ public class Controller {
         this.nikname = this.myNik.getText();
         OnChat();
         if (!this.nikname.isEmpty()) {
-            this.out.write("(" + Utils.dateTimeCreate() + ") - " + nikname + ":\t подключен к чату\n");
+            String out = "(" + Utils.dateTimeCreate() + ") - " + nikname + ": \t подключен к чату \n";
+            this.out.write(out);
             this.out.flush();
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
@@ -98,13 +100,14 @@ public class Controller {
     public void pressMyButtonSend(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
 
         textMessage = mytextChat.getText();
+
         if (!textMessage.isEmpty()) {
+
             StringJoiner myTextOut = new StringJoiner("\n");
             this.nikname = this.myNik.getText();
-
-            myTextOut.add("(" + Utils.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage);
             if (!this.nikname.isEmpty()) {
-                this.out.write(myTextOut + "\n");
+                String out = myTextOut.add("(" + Utils.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage).toString();
+                this.out.write(out + "\n");
                 this.out.flush();
                 this.mytextChat.clear();
 
@@ -146,6 +149,7 @@ public class Controller {
             try {
                 while (true) {
                     String myText = Controller.this.in.readLine();
+
                     StringJoiner textOut = new StringJoiner("\n");
                     Map<String, String> messageClient = new HashMap();
                     messageClient.put(Controller.this.nikname, myText);
@@ -170,14 +174,17 @@ public class Controller {
                     } else {
                         Utils.playSound(Controller.this.outSound);
                     }
+
                     Controller.this.myWindowText.setText(textOut.toString());
                 }
+
             } catch (IOException var8) {
                 Controller.this.downService();
             }
         }
     }
 }
+
 
 
 

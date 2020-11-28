@@ -9,6 +9,7 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 
 public class Main extends Application {
@@ -22,8 +23,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/sample.fxml"));
-        primaryStage.setTitle("BalTalOchKa v 1.0");
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/sample.fxml"));
+        primaryStage.setTitle("BalTalOchKa v 1.1");
         primaryStage.setScene(new Scene(root));
         runStage(primaryStage);
 
@@ -35,26 +36,15 @@ public class Main extends Application {
         });
     }
 
-    //    public static void close(){
-//
-//        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//            public void handle(WindowEvent we) {
-//                System.out.println("закрыл кнопкой X");
-//                controller.downService();
-//                Platform.exit();
-//                System.exit(0);
-//            }
-//        });
-//
-//    }
-//
     public void runStage(Stage stage) throws IOException {
         primaryStage = stage;
         primaryStage.show();
     }
 
     public static void main(String[] args) {
+
         launch(args);
+
     }
 
 

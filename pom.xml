@@ -15,6 +15,13 @@
 
     <build>
 
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--                <targetPath>resources</targetPath>-->
+<!--            </resource>-->
+<!--        </resources>-->
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -23,7 +30,7 @@
                 <configuration>
                     <source>14</source>
                     <target>14</target>
-                    <encoding>WINDOWS-1251</encoding>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
 
@@ -60,6 +67,7 @@
 
         </plugins>
     </build>
+
 
     <dependencies>
         <dependency>
