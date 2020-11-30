@@ -4,6 +4,7 @@ public class MainApp {
         /**
          особенности Maven. Нужен класс с  main для запуска Main, который наследует Application.
          Без этого запуск с jar не возможен.
+         FinalWithoutLogging
          */
         Main.main(args);
     }
