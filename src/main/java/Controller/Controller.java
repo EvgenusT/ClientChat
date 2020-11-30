@@ -13,12 +13,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Controller {
@@ -29,8 +26,7 @@ public class Controller {
     ObservableList<String> localizationList = FXCollections.observableArrayList(localAddress, address);
     String loc = "127.0.0.1";
     String add = "zf5bank.ddns.net";
-    @FXML
-    public TextField myNik;
+
     @FXML
     public TextField mytextChat;
 
@@ -52,10 +48,8 @@ public class Controller {
 
     public static final int PORT = 18080;
 
-    URL inS =  Utils.class.getResource("/sound/send.wav");
-    URL outS =  Utils.class.getResource("/sound/out.wav");
-
-    String nikname = "";
+    URL inS = Utils.class.getResource("/sound/send.wav");
+    URL outS = Utils.class.getResource("/sound/out.wav");
 
     List<Map<String, String>> myList = new LinkedList();
 
@@ -69,7 +63,13 @@ public class Controller {
         controller.downService();
     }
 
-    public void OnChat() throws IOException, InvocationTargetException {
+//    String nameUser = "Dfcz";
+
+    ControllerLogin controllerLogin = new ControllerLogin();
+    String nameUser = this.controllerLogin.dataOf();
+
+
+    public void onChat() throws IOException, InvocationTargetException {
 
         try {
             String adresRes = switchLocalization.getValue().toString();
@@ -92,38 +92,24 @@ public class Controller {
     }
 
     public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException, InvocationTargetException {
+        onChat();
 
-        this.nikname = this.myNik.getText();
-        OnChat();
-        if (!this.nikname.isEmpty()) {
-            String out = "(" + Utils.dateTimeCreate() + ") - " + nikname + ": \t подключен к чату \n";
-            this.out.write(out);
-            this.out.flush();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ник не создан");
-            alert.showAndWait();
-        }
+        String out = "(" + Utils.dateTimeCreate() + ") - " + nameUser + ": \t подключен к чату \n";
+        this.out.write(out);
+        this.out.flush();
     }
 
     public void pressMyButtonSend(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException {
 
-
         textMessage = mytextChat.getText();
-
         if (!textMessage.isEmpty()) {
-
             StringJoiner myTextOut = new StringJoiner("\n");
-            this.nikname = this.myNik.getText();
-            if (!this.nikname.isEmpty()) {
-                String out = myTextOut.add("(" + Utils.dateTimeCreate() + ") - " + this.nikname + ":\t" + textMessage).toString();
-                this.out.write(out + "\n");
-                this.out.flush();
-                this.mytextChat.clear();
 
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Невозможно отправить сообщение, ник не задан");
-                alert.showAndWait();
-            }
+            String out = myTextOut.add("(" + Utils.dateTimeCreate() + ") - " + nameUser + ":\t" + textMessage).toString();
+            this.out.write(out + "\n");
+            this.out.flush();
+            this.mytextChat.clear();
+
         }
     }
 
@@ -134,7 +120,7 @@ public class Controller {
 
     public void pressMyButtonOffChat(ActionEvent actionEvent) throws IOException {
         this.downService();
-        this.myWindowText.setText("(" + Utils.dateTimeCreate() + ") - " + this.nikname + ":\t ты отключен от чата");
+        this.myWindowText.setText("(" + Utils.dateTimeCreate() + ") - " + nameUser + ":\t ты отключен от чата");
     }
 
     private void downService() {
@@ -158,17 +144,15 @@ public class Controller {
             try {
                 while (true) {
                     String myText = Controller.this.in.readLine();
-
                     StringJoiner textOut = new StringJoiner("\n");
                     Map<String, String> messageClient = new HashMap();
-                    messageClient.put(Controller.this.nikname, myText);
+                    messageClient.put(nameUser, myText);
                     Controller.this.myList.add(messageClient);
                     Controller.this.myList.forEach((m) -> {
                         m.forEach((key, value) -> {
                             textOut.add(value);
                         });
                     });
-
                     // разбор строки для определения входящего либо ичсходящего сообщения, для выбора звука
                     Matcher matcher = Pattern.compile("\\-(?:([^\\-]+))\\:").matcher(myText);
 
@@ -176,21 +160,11 @@ public class Controller {
                     for (res = ""; matcher.find(); res = matcher.group()) {
                     }
                     String resOut = res.substring(2, res.length() - 1);
-                    if (!resOut.equals(Controller.this.myNik.getText())) {
-
-                        /**
-                         String outSound = "src\\main\\resources\\sound\\out.wav";
-                         String inSound = "src\\main\\resources\\sound\\send.wav";                         *
-                         */
-
-
-
-
+                    if (!resOut.equals(nameUser)) {
                         Utils.playSound(inS);
                     } else {
                         Utils.playSound(outS);
                     }
-
                     Controller.this.myWindowText.setText(textOut.toString());
                 }
 

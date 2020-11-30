@@ -21,23 +21,8 @@ public class Utils {
         return datetime;
     }
 
-//    public static void playSound(String nameFile) {
-//        try {
-//
-//            //(getClass().getResource("FXML/sample.fxml"));
-//            Media hit = new Media(new File(nameFile));
-//            MediaPlayer mediaPlayer = new MediaPlayer(hit);
-//            mediaPlayer.play();
-//
-//        } catch (Exception e) {
-//            System.out.println("Файл звука не найден");
-//            e.printStackTrace();
-//        }
-//    }
-
     public static void playSound(URL sound) {
         try {
-            System.out.println(sound);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(sound);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
