@@ -15,8 +15,6 @@ public class Main extends Application {
 
     public static Stage primaryStage;
 
-    Controller controller = new Controller();
-
     public Main() throws UnsupportedEncodingException {
     }
 
@@ -27,13 +25,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         runStage(primaryStage);
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                controller.stop();
-                System.exit(0);
-            }
-        });
-    }
+           }
 
     public void runStage(Stage stage) throws IOException {
         primaryStage = stage;

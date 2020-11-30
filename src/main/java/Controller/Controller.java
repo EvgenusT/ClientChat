@@ -52,12 +52,6 @@ public class Controller {
 
     public static final int PORT = 18080;
 
-    String outSound = "src\\main\\resources\\sound\\out.wav";
-    String inSound = "src\\main\\resources\\sound\\send.wav";
-
-    URL inSound_ = Controller.class.getResource("resources\\sound\\send.wav");
-    URL outSound_ = Controller.class.getResource("main\\resources\\sound\\out.wav");
-
     URL inS =  Utils.class.getResource("/sound/send.wav");
     URL outS =  Utils.class.getResource("/sound/out.wav");
 
