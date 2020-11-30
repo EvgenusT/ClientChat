@@ -22,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/login.fxml"));
         primaryStage.setTitle("BalTalOchKa v 1.1");
         primaryStage.setScene(new Scene(root));
         runStage(primaryStage);
