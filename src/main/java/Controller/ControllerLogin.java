@@ -7,7 +7,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class ControllerLogin {
-
+    /**
+     * куда пойдет коммит ?
+     */
     @FXML
     private Button button_check_in;
 
