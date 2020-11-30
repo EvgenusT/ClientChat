@@ -8,3 +8,7 @@ public class MainApp {
         Main.main(args);
     }
 }
+
+/**
+ * Как всегда что то тестирую в гите
+ */
