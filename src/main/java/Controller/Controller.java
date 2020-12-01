@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import DataUser.Users;
 import Utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,11 +64,7 @@ public class Controller {
         controller.downService();
     }
 
-//    String nameUser = "Dfcz";
-
-    ControllerLogin controllerLogin = new ControllerLogin();
-    String nameUser = this.controllerLogin.dataOf();
-
+    String nameUser = Users.getLogin();
 
     public void onChat() throws IOException, InvocationTargetException {
 
@@ -92,6 +89,7 @@ public class Controller {
     }
 
     public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException, InvocationTargetException {
+
         onChat();
 
         String out = "(" + Utils.dateTimeCreate() + ") - " + nameUser + ": \t подключен к чату \n";

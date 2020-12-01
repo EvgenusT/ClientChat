@@ -5,37 +5,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="513.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="600.0" prefWidth="513.0" vgap="10"
+          xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="Controller.Controller">
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints />
+        <RowConstraints/>
     </rowConstraints>
     <children>
         <AnchorPane prefHeight="800.0" prefWidth="500.0" style="-fx-border-color: #2E3348;">
             <children>
-            <AnchorPane layoutX="2.0" prefHeight="107.0" prefWidth="513.0" style="-fx-background-color: #778899;">
-               <children>
-                  <Label layoutX="144.0" layoutY="14.0" text="BolTalCa" textFill="#fffdfd99">
-                     <font>
-                        <Font name="Comic Sans MS" size="56.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-                <Label layoutX="27.0" layoutY="290.0" text="Чат" />
-                <Button fx:id="myButtonCreate" layoutX="27.0" layoutY="169.0" mnemonicParsing="false" onAction="#pressMyButtonCreateNik" prefHeight="25.0" prefWidth="185.0" text="Подключиться" />
-                <Button fx:id="myButtonSend" layoutX="25.0" layoutY="253.0" mnemonicParsing="false" onAction="#pressMyButtonSend" text="Отправить сообщение" />
-                <TextArea fx:id="myWindowText" layoutX="26.0" layoutY="328.0" prefHeight="245.0" prefWidth="452.0" wrapText="true" />
-                <TextField fx:id="mytextChat" layoutX="25.0" layoutY="214.0" onAction="#pressMyButtonSend" prefHeight="25.0" prefWidth="452.0" />
-                <Button fx:id="myButtonCleare" layoutX="388.0" layoutY="253.0" mnemonicParsing="false" onAction="#pressMyButtonCleare" text="Очистить чат" />
-                <Label alignment="CENTER" layoutX="330.0" layoutY="135.0" prefHeight="17.0" prefWidth="149.0" text="Способ подключения" textAlignment="CENTER" />
-            <ChoiceBox fx:id="switchLocalization" layoutX="295.0" layoutY="169.0" prefHeight="25.0" prefWidth="185.0" />
-            <Button fx:id="offChat" layoutX="336.0" layoutY="286.0" mnemonicParsing="false" onAction="#pressMyButtonOffChat" prefHeight="25.0" prefWidth="141.0" text="Отключиться от чата" />
+                <AnchorPane layoutX="2.0" prefHeight="107.0" prefWidth="513.0" style="-fx-background-color: #778899;">
+                    <children>
+                        <Label layoutX="144.0" layoutY="14.0" text="BolTalCa" textFill="#fffdfd99">
+                            <font>
+                                <Font name="Comic Sans MS" size="56.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="27.0" layoutY="290.0" text="Чат"/>
+                <Button fx:id="myButtonCreate" layoutX="27.0" layoutY="169.0" mnemonicParsing="false"
+                        onAction="#pressMyButtonCreateNik" prefHeight="25.0" prefWidth="185.0" text="Подключиться"/>
+                <Button fx:id="myButtonSend" layoutX="25.0" layoutY="253.0" mnemonicParsing="false"
+                        onAction="#pressMyButtonSend" text="Отправить сообщение"/>
+                <TextArea fx:id="myWindowText" layoutX="26.0" layoutY="328.0" prefHeight="245.0" prefWidth="452.0"
+                          wrapText="true"/>
+                <TextField fx:id="mytextChat" layoutX="25.0" layoutY="214.0" onAction="#pressMyButtonSend"
+                           prefHeight="25.0" prefWidth="452.0"/>
+                <Button fx:id="myButtonCleare" layoutX="388.0" layoutY="253.0" mnemonicParsing="false"
+                        onAction="#pressMyButtonCleare" text="Очистить чат"/>
+                <Label alignment="CENTER" layoutX="330.0" layoutY="135.0" prefHeight="17.0" prefWidth="149.0"
+                       text="Способ подключения" textAlignment="CENTER"/>
+                <ChoiceBox fx:id="switchLocalization" layoutX="295.0" layoutY="169.0" prefHeight="25.0"
+                           prefWidth="185.0"/>
+                <Button fx:id="offChat" layoutX="336.0" layoutY="286.0" mnemonicParsing="false"
+                        onAction="#pressMyButtonOffChat" prefHeight="25.0" prefWidth="141.0"
+                        text="Отключиться от чата"/>
             </children>
             <effect>
-                <Glow level="0.18" />
+                <Glow level="0.18"/>
             </effect>
         </AnchorPane>
     </children>

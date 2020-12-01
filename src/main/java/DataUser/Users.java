@@ -4,12 +4,9 @@ import Controller.Controller;
 
 public class Users {
 
-    private String login;
-    private String password;
+    static private String login;
+    static private String password;
 
-    public String getLogin() {
-        return login;
-    }
     static Users user = null;
 
     public Users() {
@@ -25,7 +22,11 @@ public class Users {
         this.login = login;
     }
 
-    public String getPassword() {
+    public static String getLogin() {
+        return login;
+    }
+
+    public static String getPassword() {
         return password;
     }
 

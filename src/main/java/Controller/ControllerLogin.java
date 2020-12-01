@@ -62,7 +62,7 @@ public class ControllerLogin {
 
     //нажатие кнопки входа в чат
     @FXML
-    void putBottonEntry(ActionEvent event)  {
+    void putBottonEntry(ActionEvent event) {
 //        ControllerLogin controllerLogin = new ControllerLogin();
 
         String loginText = login.getText().trim();
@@ -88,7 +88,6 @@ public class ControllerLogin {
             Stage primaryStage = new Stage();
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-//            Controller.OnChat(loginText);
 
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
@@ -103,7 +102,7 @@ public class ControllerLogin {
         }
     }
 
-    private boolean checkOk(String loginText, String loginPassword)  {
+    private boolean checkOk(String loginText, String loginPassword) {
         boolean check = false;
         DBConnect dbConnect = new DBConnect();
 
@@ -123,13 +122,17 @@ public class ControllerLogin {
         }
         if (counterUser >= 1) {
             check = true;
+
         }
         return check;
     }
 
     public String dataOf() throws UnsupportedEncodingException {
-        System.out.println(user.getLogin());
-    return user.getLogin();
+//    String loginText = login.getText().trim();
+//        System.out.println(loginText);
+        String eee = "вася";
+//    return user.getLogin();
+        return eee;
     }
 }
 
