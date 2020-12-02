@@ -3,7 +3,6 @@ package Controller;
 import DataUser.Users;
 import Utils.DBConnect;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -33,7 +31,7 @@ public class ControllerCheckIn {
 
         id_botton_checkIn.getScene().getWindow().hide();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ControllerLogin.class.getResource("/FXML/login.fxml"));
+        loader.setLocation(ControllerLogin.class.getResource("FXML/login.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
@@ -44,18 +42,14 @@ public class ControllerCheckIn {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
-
-
     }
     private void signAddNewUser() {
         DBConnect dbConnect = new DBConnect();
         String login = id_logincheckIn.getText();
         String password = id_passwordCI.getText();
-
         Users user = new Users(login, password);
-
         dbConnect.signAddUser(user);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "вас успешно зарегистрировано в чате");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Вас успешно зарегистрировано в чате");
         alert.showAndWait();
     }
 }

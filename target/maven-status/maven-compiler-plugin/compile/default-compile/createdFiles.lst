@@ -1,2 +1,13 @@
 MainApp.class
+Controller\Controller.class
+Utils\DBConnect.class
+Controller\Controller$ReadMsg.class
+Controller\ControllerCheckIn.class
+Utils\Utils.class
+Utils\DBConfig.class
+Utils\CONST.class
 Main.class
+Utils\RequestSQL.class
+Controller\ControllerLogin$1.class
+Controller\ControllerLogin.class
+DataUser\Users.class

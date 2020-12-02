@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Controller {
@@ -89,9 +88,7 @@ public class Controller {
     }
 
     public void pressMyButtonCreateNik(ActionEvent actionEvent) throws IOException, InvocationTargetException {
-
         onChat();
-
         String out = "(" + Utils.dateTimeCreate() + ") - " + nameUser + ": \t подключен к чату \n";
         this.out.write(out);
         this.out.flush();

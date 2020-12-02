@@ -19,12 +19,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ControllerLogin {
-
-//    Controller controller = new Controller();
 
     @FXML
     private TextField login;
@@ -36,10 +32,7 @@ public class ControllerLogin {
     private Button button_entry;
 
     public ControllerLogin() throws UnsupportedEncodingException {
-
-
     }
-
     Users user = new Users();
 
     //нажатие кнопки регистрация
@@ -57,13 +50,11 @@ public class ControllerLogin {
         Stage primaryStage = new Stage();
         primaryStage.setScene(new Scene(root));
         primaryStage.showAndWait();
-
     }
 
     //нажатие кнопки входа в чат
     @FXML
     void putBottonEntry(ActionEvent event) {
-//        ControllerLogin controllerLogin = new ControllerLogin();
 
         String loginText = login.getText().trim();
         String loginPassword = password.getText().trim();
@@ -91,8 +82,8 @@ public class ControllerLogin {
 
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
-                    Controller.stop();
-                    System.exit(0);
+//                    Controller.stop();
+//                    System.exit(0);
                 }
             })
             ;
@@ -105,7 +96,6 @@ public class ControllerLogin {
     private boolean checkOk(String loginText, String loginPassword) {
         boolean check = false;
         DBConnect dbConnect = new DBConnect();
-
         user.setLogin(loginText);
         user.setPassword(loginPassword);
         ResultSet resultSet = dbConnect.getUseData(user);
@@ -122,17 +112,8 @@ public class ControllerLogin {
         }
         if (counterUser >= 1) {
             check = true;
-
         }
         return check;
-    }
-
-    public String dataOf() throws UnsupportedEncodingException {
-//    String loginText = login.getText().trim();
-//        System.out.println(loginText);
-        String eee = "вася";
-//    return user.getLogin();
-        return eee;
     }
 }
 
