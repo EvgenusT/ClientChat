@@ -1,7 +1,5 @@
 package DataUser;
 
-import Controller.Controller;
-
 public class Users {
 
     static private String login;

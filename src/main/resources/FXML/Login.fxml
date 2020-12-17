@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ControllerLogin">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerLogin">
    <children>
       <AnchorPane layoutX="26.0" layoutY="-16.0" prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -17,24 +17,25 @@
                   <Font name="Comic Sans MS" size="56.0" />
                </font>
             </Label>
-            <Label layoutX="191.0" layoutY="141.0" text="Авторизация" textFill="#14131399">
+            <Label layoutX="154.0" layoutY="141.0" prefHeight="38.0" prefWidth="225.0" text="Authentication" textFill="#14131399">
                <font>
                   <Font name="Comic Sans MS" size="27.0" />
                </font>
             </Label>
+            <ChoiceBox fx:id="switchLocalization" layoutX="-11.0" layoutY="215.0" prefHeight="25.0" prefWidth="185.0" />
+            <Label layoutX="-14.0" layoutY="180.0" text="Способ подключения" />
          </children>
       </AnchorPane>
-      <TextField fx:id="login" layoutX="108.0" layoutY="208.0" prefHeight="25.0" prefWidth="385.0" promptText="Логин"
-                 style="-fx-background-color: white; -fx-border-color: silver;">
+      <TextField fx:id="login" layoutX="108.0" layoutY="243.0" prefHeight="25.0" prefWidth="385.0" promptText="Логин" style="-fx-background-color: white; -fx-border-color: silver;">
          <font>
-            <Font size="15.0"/>
+            <Font size="15.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="password" layoutX="108.0" layoutY="276.0" prefHeight="25.0" prefWidth="385.0" promptText="Пароль" style="-fx-background-color: white; -fx-border-color: silver;">
+      <PasswordField fx:id="password" layoutX="108.0" layoutY="302.0" prefHeight="25.0" prefWidth="385.0" promptText="Пароль" style="-fx-background-color: white; -fx-border-color: silver;">
          <font>
             <Font size="15.0" />
          </font>
       </PasswordField>
-      <Button fx:id="button_entry" layoutX="274.0" layoutY="342.0" mnemonicParsing="false" onAction="#putBottonEntry" text="Вход" />
+      <Button fx:id="button_entry" layoutX="274.0" layoutY="356.0" mnemonicParsing="false" onAction="#putBottonEntry" text="Вход" />
    </children>
 </AnchorPane>

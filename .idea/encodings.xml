@@ -2,9 +2,9 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Controller/Controller.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Controller/ControllerCheckIn.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/Controller/ControllerLogin.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controllers/Controller.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controllers/ControllerCheckIn.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controllers/ControllerLogin.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/Main.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/MainApp.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/Utils/Utils.java" charset="UTF-8" />
